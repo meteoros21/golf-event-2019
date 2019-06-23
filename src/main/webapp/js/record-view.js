@@ -3,7 +3,7 @@ var gameId = '2019kor-china';
 function loadData()
 {
     $.ajax({
-        url: 'http://localhost:8080/api/getData?gameId=' + gameId,
+        url: '/api/getData?gameId=' + gameId,
         method: 'GET',
         dataType: 'text',
         error: function(jqXHR, textStatus, error) {
