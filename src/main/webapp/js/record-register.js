@@ -2,11 +2,13 @@ var gameInfo = null;
 var gameId = '2019kor-china';
 var roundTr = '<tr>\n' +
     '<td>1</td>\n' +
+    '<td><input type="checkbox" class="rw1" name="rw1"></td>\n' +
     '<td><input type="text" name="player1" style="text-align: left"></td>\n' +
     '<td><input type="text" name="point1" style="width:30px"></td>\n' +
     '<td style="width:20px">VS</td>\n' +
     '<td><input type="text" name="point2" style="width:30px"></td>\n' +
     '<td><input type="text" name="player2" style="text-align: left"></td>\n' +
+    '<td><input type="checkbox" class="rw2" name="rw2"></td>\n' +
     '<td><input type="text" name="score" style="width:60px"></td>\n' +
     '<td><input type="text" name="time" style="width:60px"></td>\n' +
     '<td><select name="status" class="form-controll">\n' +
@@ -63,9 +65,7 @@ function showMvp()
     for (var i = 0; i < 2; i++)
     {
         var data = mvpData.records[i];
-
         $(form).find('input[name=point]')[i].value = data.point;
-        $(form).find('input[name=rank]')[i].value = data.rank;
     }
 }
 
@@ -81,6 +81,14 @@ function showFinalData()
 
         $(form).find('input[name=point1]')[i].value = data.point1;
         $(form).find('input[name=point2]')[i].value = data.point2;
+
+        $(form).find('input[name=fw1]')[i].checked = false;
+        $(form).find('input[name=fw2]')[i].checked = false;
+
+        if (data.winTeamNo == 1)
+            $(form).find('input[name=fw1]')[i].checked = true;
+        else if (data.winTeamNo == 2)
+            $(form).find('input[name=fw2]')[i].checked = true;
     }
 }
 
@@ -93,6 +101,27 @@ function showRoundData(table, dataList, form)
 
         for (var i = 1; i <= 12; i++)
             table.rows[i].cells[0].innerText = (i);
+
+        $('.rw1').on('change', function () {
+            var checked = $(this).is(':checked');
+
+            if (checked == true)
+            {
+                var tr = $(this).parents('tr')[0];
+                var test = $(tr).find('.rw2')[0];
+                test.checked = !checked;
+            }
+        });
+        $('.rw2').on('change', function () {
+            var checked = $(this).is(':checked');
+
+            if (checked == true)
+            {
+                var tr = $(this).parents('tr')[0];
+                var test = $(tr).find('.rw1')[0];
+                test.checked = !checked;
+            }
+        });
     }
 
     if (typeof dataList == 'undefined' || dataList == null)
@@ -107,6 +136,14 @@ function showRoundData(table, dataList, form)
         form.find('input[name=point2]')[i].value = data.point2;
         form.find('input[name=score]')[i].value = data.score;
         form.find('input[name=time]')[i].value = data.time;
+
+        form.find('input[name=rw1]')[i].checked = false;
+        form.find('input[name=rw2]')[i].checked = false;
+
+        if (data.winTeamNo == 1)
+            form.find('input[name=rw1]')[i].checked = true;
+        else if (data.winTeamNo == 2)
+            form.find('input[name=rw2]')[i].checked = true;
 
         var sel = $(form.find('select[name=status]')[i]);
         sel.val(data.status);
@@ -143,6 +180,16 @@ function buildRoundRecord(no)
         record['score'] = form.find('input[name=score]')[i].value;
         record['time'] = form.find('input[name=time]')[i].value;
 
+        var w1 = form.find('input[name=rw1]')[i].checked;
+        var w2 = form.find('input[name=rw2]')[i].checked;
+
+        if (w1 == true && w2 == false)
+            record['winTeamNo'] = 1;
+        else if (w1 == false && w2 == true)
+            record['winTeamNo'] = 2;
+        else
+            record['winTeamNo'] = 0;
+
         var sel = $(form.find('select[name=status]')[i]);
         record['status'] = sel.val();
 
@@ -167,19 +214,16 @@ function buildFinalRecord()
         record['point1'] = form.find('input[name=point1]')[i].value;
         record['point2'] = form.find('input[name=point2]')[i].value;
 
-        var point1 = parseFloat(record['point1']);
-        var point2 = parseFloat(record['point2']);
+        var check1 = form.find('input[name=fw1]')[i];
+        var check2 = form.find('input[name=fw2]')[i];
 
-        var winTeam = 0;
+        if (check1.checked == true && check2.checked == false)
+            record['winTeamNo'] = 1;
+        else if (check1.checked == false && check2.checked == true)
+            record['winTeamNo'] = 2;
+        else
+            record['winTeamNo'] = 0;
 
-        if (isNaN(point1) == false && isNaN(point2))
-        {
-            if (point1 > point2)
-                winTeam = 1;
-            else if (point1 < point2)
-                winTeam = 2;
-        }
-        record['winTeam'] = winTeam;
         records.push(record);
     }
 
@@ -209,8 +253,6 @@ function buildMvpData()
     {
         var record = {};
         record['point'] = form.find('input[name=point]')[i].value;
-        record['rank'] = form.find('input[name=rank]')[i].value;
-
         mvpData['records'].push(record);
     }
 

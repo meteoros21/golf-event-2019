@@ -106,10 +106,7 @@ function showMvp()
     for (var i = 0; i < 2; i++)
     {
         var data = mvpData.records[i];
-
         table.rows[i+1].cells[1].innerText = data.point;
-        table.rows[i+1].cells[2].innerText = data.rank;
-
     }
 }
 
@@ -120,7 +117,7 @@ function showFinalData() {
     {
         var row = table.rows[i+1];
         var data = gameInfo.finalRecord[i];
-        if (data.winTeam == 1)
+        if (data.winTeamNo == 1)
         {
             for (var j = 1; j <= 2; j++) {
                 $(row.cells[j]).css('color', 'white');
@@ -131,7 +128,7 @@ function showFinalData() {
                 $(row.cells[j]).css('background-color', 'white');
             }
         }
-        else if (data.winTeam == 2)
+        else if (data.winTeamNo == 2)
         {
             for (var j = 1; j <= 2; j++) {
                 $(row.cells[j]).css('color', 'black');
@@ -156,7 +153,7 @@ function showFinalData() {
         if (i == 2)
         {
             row = table.rows[0];
-            if (data.winTeam == 1)
+            if (data.winTeamNo == 1)
             {
                 for (var j = 1; j <= 2; j++) {
                     $(row.cells[j]).css('color', 'white');
@@ -167,7 +164,7 @@ function showFinalData() {
                     $(row.cells[j]).css('background-color', 'white');
                 }
             }
-            else if (data.winTeam == 2)
+            else if (data.winTeamNo == 2)
             {
                 for (var j = 1; j <= 2; j++) {
                     $(row.cells[j]).css('color', 'black');
@@ -217,8 +214,8 @@ function showData(table, dataList, month, day)
 
             var t = data.time.split(':');
 
-            row.cells[3].innerHTML = month + '.<br/>' + (typeof t[0] == 'undefined' ? '&nbsp;' : t[0]) + ':';
-            row.cells[4].innerHTML = day + '<br/>' + (typeof t[1] == 'undefined' ? '&nbsp' : t[1]);
+            row.cells[3].innerHTML = (typeof t[0] == 'undefined' ? '&nbsp;' : t[0]) + ':';
+            row.cells[4].innerHTML = (typeof t[1] == 'undefined' ? '&nbsp' : t[1]);
 
         }
         else if (data.status == 1)
@@ -240,10 +237,9 @@ function showData(table, dataList, month, day)
         }
         else
         {
-            var p1 = parseInt(data.point1);
-            var p2 = parseInt(data.point2);
+            var winTeamNo = data.winTeamNo;
 
-            if (p1 > p2)
+            if (winTeamNo == 1)
             {
                 for (var j = 1; j <= 3; j++) {
                     $(row.cells[j]).css('color', 'white');
@@ -256,7 +252,7 @@ function showData(table, dataList, month, day)
                     $(row.cells[j]).css('background-color', 'white');
                 }
             }
-            else if (p1 < p2)
+            else if (winTeamNo == 2)
             {
                 for (var j = 1; j <= 3; j++) {
                     $(row.cells[j]).css('color', 'black');

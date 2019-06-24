@@ -46,7 +46,29 @@
 
         $('#user-photo-file').on('change', function () {
             photoChanged();
-        })
+        });
+
+        $('input[name=fw1]').on('change', function () {
+            var checked = $(this).is(':checked');
+
+            if (checked == true)
+            {
+                var tr = $(this).parents('tr')[0];
+                var test = $(tr).find('input[name=fw2]')[0];
+                test.checked = !checked;
+            }
+        });
+
+        $('input[name=fw2]').on('change', function () {
+            var checked = $(this).is(':checked');
+
+            if (checked == true)
+            {
+                var tr = $(this).parents('tr')[0];
+                var test = $(tr).find('input[name=fw1]')[0];
+                test.checked = !checked;
+            }
+        });
     })
 </script>
 <body>
@@ -87,11 +109,13 @@
                     <table class="table-record" id="table-record">
                         <tr>
                             <td style="width: 20px">Group</td>
+                            <td>W</td>
                             <td>Korea Team</td>
                             <td style="width: 20px"></td>
                             <td style="width: 20px">VS</td>
                             <td style="width: 20px"></td>
                             <td>China Team</td>
+                            <td>W</td>
                             <td style="width: 60px">Score</td>
                             <td style="width: 100px">Time</td>
                             <td style="width: 100px">Status</td>
@@ -130,11 +154,13 @@
                     <table class="table-record" id="table-record2">
                         <tr>
                             <td style="width: 20px">Group</td>
+                            <td>W</td>
                             <td style="width: 100px">Korea Team</td>
                             <td style="width: 20px"></td>
                             <td style="width: 20px">VS</td>
                             <td style="width: 20px"></td>
                             <td style="width: 100px">China Team</td>
+                            <td>W</td>
                             <td style="width: 60px">Score</td>
                             <td style="width: 100px">Time</td>
                             <td style="width: 100px">Status</td>
@@ -155,29 +181,37 @@
                     <table class="table-result" id="table-final-record">
                         <thead>
                         <tr>
-                            <td style="width: 20px">Team</td>
-                            <td style="width: 30%">Korea Team</td>
+                            <td style="width: 30%">Team</td>
+                            <td style="width: 120px; padding-left: 30px">Win</td>
+                            <td style="width: 25%">Korea Team</td>
                             <td>VS</td>
-                            <td style="width: 30%">China Team</td>
+                            <td style="width: 25%">China Team</td>
+                            <td style="width: 120px; padding-right: 30px">Win</td>
                         </tr>
                         </thead>
                         <tr>
                             <td>Round1 - Single Stroke Play</td>
+                            <td style="padding-left: 30px"><input type="checkbox" name="fw1"></td>
                             <td><input type="text" name="point1"> Point</td>
                             <td>VS</td>
                             <td><input type="text" name="point2"> Point</td>
+                            <td style="padding-right: 30px"><input type="checkbox" name="fw2"></td>
                         </tr>
                         <tr>
                             <td>Round2 - Match Play</td>
+                            <td style="padding-left: 30px"><input type="checkbox" name="fw1"></td>
                             <td><input type="text" name="point1"> Point</td>
                             <td>VS</td>
                             <td><input type="text" name="point2"> Point</td>
+                            <td style="padding-right: 30px"><input type="checkbox" name="fw2"></td>
                         </tr>
                         <tr>
                             <td>Total Point</td>
+                            <td style="padding-left: 30px"><input type="checkbox" name="fw1"></td>
                             <td><input type="text" name="point1"> Point</td>
                             <td>VS</td>
                             <td><input type="text" name="point2"> Point</td>
+                            <td style="padding-right: 30px"><input type="checkbox" name="fw2"></td>
                         </tr>
                     </table>
                     </form>
@@ -199,23 +233,21 @@
                                 <table id="table-mvp" class="table-mvp">
                                     <thead>
                                     <tr>
-                                        <td width="46%"><select id="mvp-team" name="teamNo" style="width: 200px; text-align: center">
+                                        <td style="width: 50%"><select id="mvp-team" name="teamNo" style="width: 200px; text-align: center">
                                             <option value="0">Select Team</option>
                                             <option value="1">Korea Team</option>
                                             <option value="2">China Team</option>
                                         </select></td>
-                                        <td colspan="2"><input type="text" placeholder="Player Name" name="player" style="width: 200px; text-align: left"></td>
+                                        <td style="width: 50%"><input type="text" placeholder="Player Name" name="player" style="width: 200px; text-align: left"></td>
                                     </tr>
                                     </thead>
                                     <tr>
                                         <td>Round 1 - Single stroke play</td>
                                         <td style="width: 27%"><input type="text" name="point"></td>
-                                        <td><input type="text" name="rank"></td>
                                     </tr>
                                     <tr>
                                         <td>Round 2 - Match Play</td>
                                         <td><input type="text" name="point"></td>
-                                        <td><input type="text" name="rank"></td>
                                     </tr>
                                 </table>
                             </div>
@@ -224,11 +256,11 @@
                     </form>
                 </div>
                 <!-- end of carousel-item -->
-                <a class="carousel-control-prev" href="#slider1" role="button" data-slide="prev">
+                <a class="carousel-control-prev" href="#slider1" role="button" data-slide="prev" style="width: 5%">
                     <span class="carousel-control-prev-icon" aria-hidden="true" style="outline: black"></span>
                     <span class="sr-only">Previous</span>
                 </a>
-                <a class="carousel-control-next" href="#slider1" role="button" data-slide="next">
+                <a class="carousel-control-next" href="#slider1" role="button" data-slide="next" style="width: 5%">
                     <span class="carousel-control-next-icon" aria-hidden="true" style="outline: black"></span>
                     <span class="sr-only">Next</span>
                 </a>

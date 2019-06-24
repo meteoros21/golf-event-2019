@@ -24,11 +24,39 @@
 
         loadData('test');
 
+        // 저장된 페이지가 존재하면 해당 페이지로 이동한다.
+        var savedPage = sessionStorage.getItem('page');
+        if (typeof savedPage != 'undefined' && savedPage != null)
+        {
+            savedPage = parseInt(savedPage);
+            $('#slider1').carousel(savedPage);
+
+            $('.circle-active').removeClass('circle-active').addClass('circle');
+            $('#pager-' + (savedPage+1)).removeClass('circle').addClass('circle-active');
+        }
+        else
+        {
+            // 오늘 날짜를 얻는다. 6월 28일이면 2페이지로 이동한다.
+            var today = new Date();
+            var mm = today.getMonth()+1;
+            var dd = today.getDate();
+
+            if (mm == 6 && dd == 28)
+            {
+                $('#slider1').carousel(1);
+
+                $('.circle-active').removeClass('circle-active').addClass('circle');
+                $('#pager-2').removeClass('circle').addClass('circle-active');
+            }
+        }
+
         $('#slider1').on('slid.bs.carousel', function (event) {
             var nextactiveslide = $(event.relatedTarget).index() + 1;
 
             $('.circle-active').removeClass('circle-active').addClass('circle');
             $('#pager-' + nextactiveslide).removeClass('circle').addClass('circle-active');
+
+            sessionStorage.setItem('page', nextactiveslide - 1);
         });
     })
 </script>
@@ -376,18 +404,16 @@
                                 <table id="table-mvp" class="table-mvp">
                                     <thead>
                                         <tr>
-                                            <td style="width: 46%; height: 44px"></td>
-                                            <td colspan="2"></td>
+                                            <td style="width: 60%; height: 44px"></td>
+                                            <td style="width: 40%"></td>
                                         </tr>
                                     </thead>
                                     <tr>
                                         <td>Round 1 - Single stroke play</td>
-                                        <td style="width: 27%">-</td>
-                                        <td></td>
+                                        <td>-</td>
                                     </tr>
                                     <tr>
                                         <td>Round 2 - Match Play</td>
-                                        <td></td>
                                         <td></td>
                                     </tr>
                                 </table>
