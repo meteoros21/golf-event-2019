@@ -22,7 +22,7 @@
 <script language="JavaScript">
     $(document).ready(function() {
 
-        loadData('test');
+        loadData();
 
         // 저장된 페이지가 존재하면 해당 페이지로 이동한다.
         var savedPage = sessionStorage.getItem('page');
@@ -58,6 +58,10 @@
 
             sessionStorage.setItem('page', nextactiveslide - 1);
         });
+
+        setInterval(function() {
+            loadData();
+        }, 15000)
     })
 </script>
 <body>
