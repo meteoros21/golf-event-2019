@@ -2,15 +2,15 @@ package net.ion.et.golfevent2019.controller;
 
 import net.ion.et.golfevent2019.entity.GameInfo;
 import net.ion.et.golfevent2019.repository.GameInfoRepository;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -107,6 +107,18 @@ public class ApiController
         return result;
     }
 
+    @GetMapping("/api/image/{fileName}")
+    public byte[] getMvpImage(@PathVariable("fileName") String fileName) throws Exception
+    {
+        File file = new File("/app/golf-event-2019/uploaded/" + fileName);
+
+        InputStream is = new FileInputStream(file);
+        byte[] bytes = IOUtils.toByteArray(is);
+        is.close();
+
+        return bytes;
+    }
+
     @PostMapping("/api/uploadPhoto")
     public Map<String,String> uploadPhoto(@RequestParam("photoFile")MultipartFile file) throws Exception
     {
@@ -114,8 +126,17 @@ public class ApiController
         result.put("resultCode", "0");
         result.put("resultMsg", "Success");
 
-        String filePath = saveImageFile("/uploaded", file);
-        result.put("photo-url", filePath);
+        String fileName = saveImageFile("/uploaded", file);
+
+        if (fileName != null)
+        {
+            result.put("photo-url", "/api/image/" + fileName);
+        }
+        else
+        {
+            result.put("resultCode", "1");
+            result.put("resultMsg", "Fail to uplaod file");
+        }
 
         return result;
     }
@@ -125,7 +146,8 @@ public class ApiController
         try
         {
             // 디렉터리를 생성한다.
-            String fileDir = servletContext.getRealPath(rootPath);
+            String fileDir = "/app/golf-event-2019/uploaded";
+            //String fileDir = servletContext.getRealPath(rootPath);
             File file = new File(fileDir);
             file.mkdirs();
 

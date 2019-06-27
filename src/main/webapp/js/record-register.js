@@ -278,7 +278,7 @@ function photoChanged()
         success: function (data, textStatus, jqXHR) {
             alert('success');
 
-            $('#user-photo').attr('src', '/uploaded/' + data['photo-url']);
+            $('#user-photo').attr('src', '' + data['photo-url']);
         }
     });
 }

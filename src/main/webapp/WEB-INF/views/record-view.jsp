@@ -81,7 +81,7 @@
                 </div>
                 <div class="row">
                     <div class="cell" style="text-align: right">
-                        <h4 class="right">2019.06.27~28 나인브릿지(제주)</h4>
+                        <h4 class="right">2019.06.27~28 테디벨리cc</h4>
                     </div>
                 </div>
             </div>
@@ -94,7 +94,7 @@
                             <span>Round 1 - </span>Single Stroke Play
                         </div>
                         <div class="round-date">
-                            <i>2019.06.27.WED</i>
+                            <i>2019.06.27.THU</i>
                         </div>
                     </div>
 
@@ -227,7 +227,7 @@
                             <span>Round 2 - </span>Match Play
                         </div>
                         <div class="round-date">
-                            <i>2019.06.28.THU</i>
+                            <i>2019.06.28.FRI</i>
                         </div>
                     </div>
 
